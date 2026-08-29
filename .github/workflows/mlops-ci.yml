@@ -41,6 +41,24 @@ jobs:
     # Package the successfully validate model int docker image
       - name: Build Inference Docker Image
         run: |
-          docker build -t iris-classifier-api:lates .
-          echo "Dcoker image built successfully with the validationmodel artifact!"
+          docker build -t iris-classifier-api:latest .
+          echo "Docker image built successfully with the validated model artifact!"
 
+    # Spin up the live container inside the GitHub runner
+      - name: Run Container & Test API Endpoints
+        run: |
+          # Start the container in background mode (-d) and forward port 8000
+          docker run -d -p 8000:8000 --name ml-service iris-classifier-api:latest
+
+          # Wait 3 seconds for FastAPI and Uvicorn to finish booting up
+          sleep 3
+
+          # 1. Test the Health Check endpoint
+          echo "Testing Root Health Endpoint..."
+          curl http://localhost:8000/
+
+          # 2. Test the Machine Learning Inference model endpoint with sample data
+          echo -e "\nTesting Model Predict Endpoint..."
+          curl -X POST http://localhost:8000/predict \
+            -H "Content-Type: application/json" \
+            -d '{"sepal_length": 5.1, "sepal_width": 3.5, "petal_length": 1.4, "petal_width": 0.2}'
