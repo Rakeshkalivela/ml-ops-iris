@@ -18,6 +18,6 @@ def train():
         pickle.dump(model, f)
     print("Model trained and save as model.pkl")
 
-    if __name__ == "__main__":
+if __name__ == "__main__":
         train()
     
