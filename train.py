@@ -1,6 +1,6 @@
 import pickle
 from sklearn.datasets import load_iris
-from sklearn.model_selection import LogisticRegression
+from sklearn.linear_model import LogisticRegression
 
 def train():
     # Load the dataset
