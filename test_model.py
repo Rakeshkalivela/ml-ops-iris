@@ -4,7 +4,7 @@
 
 import os
 import pickle
-from sklrarn.datasets import load_iris
+from sklearn.datasets import load_iris
 
 def test_model_accuracy():
     # ensure modele file exists
@@ -22,4 +22,3 @@ def test_model_accuracy():
     # Quality gate threshold 90%
     assert score >= 0.9, f"Model accuracy {score:.2f} dropped below minimum threshold 0.90"
 
-    
